@@ -33,6 +33,9 @@ gem 'jbuilder', '~> 1.2'
 # Scraping capacity
 gem 'mechanize'
 
+# Angular
+gem 'angularjs-rails'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
