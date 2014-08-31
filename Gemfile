@@ -6,6 +6,9 @@ gem 'rails', '4.0.5'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# Using unicorn server
+gem 'unicorn'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
 
