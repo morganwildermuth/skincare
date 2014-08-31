@@ -48,7 +48,7 @@ test:
   encoding: unicode
   database: skincare-app_test
   pool: 5
-  username: skincare-app
+  username: skincare_app
   password:
 
 production:
@@ -56,5 +56,5 @@ production:
   encoding: unicode
   database: skincare-app_production
   pool: 5
-  username: skincare-app
+  username: skincare_app
   password:
