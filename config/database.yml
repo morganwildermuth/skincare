@@ -46,7 +46,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: skincare-app_test
+  database: skincare_app_test
   pool: 5
   username: skincare_app
   password:
@@ -54,7 +54,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: skincare-app_production
+  database: skincare_app_production
   pool: 5
   username: skincare_app
   password:
