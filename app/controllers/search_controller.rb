@@ -4,6 +4,6 @@ class SearchController < ApplicationController
     mechanize = Mechanize.new
     searchString = params["searchTerm"].gsub!(" ", "+")
     page = mechanize.get('http://cosdna.com/eng/product.php?q=' + searchString)
-    @title = page.title
+    @links = page.links_with(:href => %r{^cosmetic_})
   end
 end
