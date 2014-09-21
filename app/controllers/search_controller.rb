@@ -1,6 +1,9 @@
 class SearchController < ApplicationController
+  require './lib/syncDatabase.rb'
 
   def index
+    syncObject = Sync::Database.new
+    p syncObject
     mechanize = Mechanize.new
     if params["searchTerm"]
       searchString = params["searchTerm"].gsub!(" ", "+")
