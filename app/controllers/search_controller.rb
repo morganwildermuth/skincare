@@ -4,11 +4,11 @@ class SearchController < ApplicationController
   require 'nokogiri'
 
   def index
-    syncObject = Sync::Database.new("/Users/WEF6/desktop/cosdna (1).tar/eng/cosmetic_8898132233.html")
-    syncObject.parseCosDNAProduct
+    cosDNA_files_to_sync = Dir.entries("/Users/WEF6/desktop/cosdna (1).tar/eng/").select{|file| file[/^cosmetic/]}
+    syncObject = Sync::Database.new("/Users/WEF6/desktop/cosdna (1).tar/eng/", cosDNA_files_to_sync).syncFiles
     if params["searchTerm"]
-      searchString = params["searchTerm"].gsub!(" ", "+")
-      page = Mechanize.new.get('http://cosdna.com/eng/product.php?q=' + searchString)
+      search_string = params["searchTerm"].gsub!(" ", "+")
+      page = Mechanize.new.get('http://cosdna.com/eng/product.php?q=' + search_string)
       page.title
       @links = page.links_with(:href => %r{^cosmetic_})
     end
