@@ -9,30 +9,35 @@ module Sync
       end
 
       def syncFiles
-        @files_to_sync.slice(0..1).each do |file_name|
+        @files_to_sync.slice(0..10).each do |file_name|
           @files << File.new(@folder_path + file_name)
         end
         syncWithDatabase
       end
 
       def insertProduct(product)
-        if Product.find_by(name: product.name).nil?
-          Product.create(name: product.name, image_cosdna: product.image_location)
+        formatted_name = format_name(product.name)
+        if Product.find_by(name: formatted_name).nil?
+          Product.create(name: formatted_name, image_cosdna: product.image_location)
         end
       end
 
       def insertIngredient(ingredient, product)
-        ingredient_attributes = {
-          name: ingredient[:name],
-          acne: ingredient[:acne],
-          irritant: ingredient[:irritant],
-          safety: ingredient[:safety],
-          uva: ingredient[:uv][:uva],
-          uvb: ingredient[:uv][:uvb],
-          functions: ingredient[:functions].join(", ")
-        }
-        new_ingredient = Ingredient.create(ingredient_attributes)
-        ProductIngredient.create(ingredient: new_ingredient, product: product)
+        ingredient_check = Ingredient.find_by(name: format_name(ingredient[:name]))
+        if ingredient_check.nil?
+          new_ingredient = Ingredient.create(
+            name: format_name(ingredient[:name]),
+            acne: ingredient[:acne],
+            irritant: ingredient[:irritant],
+            safety: ingredient[:safety],
+            uva: ingredient[:uv][:uva],
+            uvb: ingredient[:uv][:uvb],
+            functions: ingredient[:functions].join(", ")
+          )
+          ProductIngredient.create(ingredient: new_ingredient, product: product)
+        else
+          ProductIngredient.create(ingredient: ingredient_check, product: product)
+        end
       end
 
       def syncWithDatabase
@@ -44,6 +49,12 @@ module Sync
             end
           end
         end
+      end
+
+      private
+
+      def format_name(name)
+        name.split(" ").map!{|w| w.capitalize}.join(" ")
       end
     end
 
