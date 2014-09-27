@@ -1,11 +1,10 @@
 class SearchController < ApplicationController
-  require './lib/syncDatabase.rb'
   require 'open-uri'
   require 'nokogiri'
 
   def index
     cosDNA_files_to_sync = Dir.entries("/Users/WEF6/desktop/cosdna (1).tar/eng/").select{|file| file[/^cosmetic/]}
-    syncObject = Sync::Database.new("/Users/WEF6/desktop/cosdna (1).tar/eng/", cosDNA_files_to_sync).syncFiles
+    syncObject = Sync::Cosdna::Database.new("/Users/WEF6/desktop/cosdna (1).tar/eng/", cosDNA_files_to_sync).syncFiles
     if params["searchTerm"]
       search_string = params["searchTerm"].gsub!(" ", "+")
       page = Mechanize.new.get('http://cosdna.com/eng/product.php?q=' + search_string)
