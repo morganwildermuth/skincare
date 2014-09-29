@@ -55,6 +55,12 @@ describe Sync::Cosdna::Database do
 
       @cosdna.insertIngredient(ingredient_attributes, Product.first)
     end
+
+    it "inserts ingredients with uv fields" do
+    end
+
+    it "inserts ingredients with ranges rather than integers for acne || irritation" do
+    end
   end
 end
 
