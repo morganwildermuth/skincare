@@ -90,6 +90,10 @@ module Sync
       end
 
       def createRowIndicators(table_rows)
+        p "#{table_rows}" if @file_path == "cosmetic_d7a0140117.html"
+        p "#{table_rows[0]}" if @file_path == "cosmetic_d7a0140117.html"
+        p "#{table_rows[0].children}" if @file_path == "cosmetic_d7a0140117.html"
+        p "#{table_rows[0].children.children}" if @file_path == "cosmetic_d7a0140117.html"
         row_indicators = {}
         table_rows[0].children.children.each_with_index do |row, i|
           row_indicators[row.text.strip] = (i * 2)
