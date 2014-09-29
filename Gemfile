@@ -9,9 +9,6 @@ gem 'pg'
 # Using unicorn server
 gem 'unicorn'
 
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.2'
-
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -27,15 +24,19 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-
 # Scraping capacity
 gem 'mechanize'
 
 # Angular
 gem 'angularjs-rails'
 gem 'angular-rails-templates'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0'
+  gem "faker"
+  gem "factory_girl_rails"
+  gem 'database_cleaner'
+end
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
