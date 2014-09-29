@@ -51,8 +51,8 @@ describe Sync::Cosdna::Database do
     it "when ingredient is in database does not insert it" do
       ingredient_attributes = @ingredient_attributes.dup
       ingredient_attributes[:name] = Ingredient.first.name
-
       @cosdna.insertIngredient(ingredient_attributes, Product.first)
+      expect(Ingredient.all.length).to eq(1)
     end
   end
 end
