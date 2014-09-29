@@ -33,6 +33,7 @@ gem 'angular-rails-templates'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
+  gem "faker"
 end
 
 group :doc do
