@@ -1,7 +1,7 @@
 module Sync
   module Cosdna
     class Database
-      attr_reader :files if ENV['RACK_ENV'] = 'test'
+      attr_reader :files if ENV['RACK_ENV'] == 'test'
 
       def initialize(folder_path, files_to_sync)
         @folder_path = folder_path
@@ -15,7 +15,7 @@ module Sync
           product_number += 1
           syncWithDatabase(File.new(@folder_path + file_name))
           p "#{product_number} product(s) added to database"
-
+          ::File.delete(@folder_path) if ENV['RACK_ENV'] == 'production'
         end
       end
 
