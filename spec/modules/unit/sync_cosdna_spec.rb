@@ -1,4 +1,4 @@
-require_relative '../../app/modules/sync.rb'
+require_relative '../../../app/modules/sync.rb'
 require 'rails_helper'
 require 'spec_helper'
 
@@ -65,7 +65,6 @@ describe Sync::Cosdna::Database do
 end
 
 describe Sync::Cosdna::File do
-
   before(:all) do
     @files_to_sync = Dir.entries("/Users/WEF6/desktop/skincare-app/spec/sync_test/cosdna").select{|file| file[/^cosmetic/]}
     @file = Sync::Cosdna::File.new("/Users/WEF6/desktop/skincare-app/spec/sync_test/cosdna/" + @files_to_sync[0])
