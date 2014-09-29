@@ -1,6 +1,6 @@
 require_relative '../../../app/modules/sync.rb'
-require 'rails_helper'
-require 'spec_helper'
+require_relative '../../rails_helper'
+require_relative '../../spec_helper'
 
 describe Sync::Cosdna do
   before(:all) do
