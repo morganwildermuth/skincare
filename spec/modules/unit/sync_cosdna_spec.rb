@@ -65,6 +65,9 @@ describe Sync::Cosdna::File do
 
   context "File" do
     it 'sets ingredient list' do
+      p @file.class
+      p a = File.new
+      p a.class
       expect(@file.ingredient_list.length).to eq(7)
     end
 
