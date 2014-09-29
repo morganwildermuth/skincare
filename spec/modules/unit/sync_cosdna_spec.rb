@@ -23,13 +23,6 @@ describe Sync::Cosdna::Database do
     @file_1 = Sync::Cosdna::File.new("/Users/WEF6/desktop/skincare-app/spec/sync_test/cosdna/cosmetic_1.html")
   end
 
-  context "syncFiles" do
-    it 'sets files correctly' do
-      @cosdna.syncFiles
-      expect(@cosdna.files.length).to eq(3)
-    end
-  end
-
   context "insertProduct" do
     it 'when products is not in database inserts it' do
       @cosdna.insertProduct(@file_1)
