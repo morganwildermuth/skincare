@@ -61,6 +61,7 @@ module Sync
 
     class File
       attr_reader :name, :ingredient_list, :image_location
+      attr_writer :name if ENV['RACK_ENV'] = 'test'
 
       def initialize(file_path)
         @page = Nokogiri::HTML(open(file_path))
