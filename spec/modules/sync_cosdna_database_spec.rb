@@ -26,7 +26,7 @@ describe Sync::Cosdna::Database do
   context "syncFiles" do
     it 'sets files correctly' do
       @cosdna.syncFiles
-      expect(@cosdna.files.length).to eq(2)
+      expect(@cosdna.files.length).to eq(3)
     end
   end
 
@@ -54,6 +54,28 @@ describe Sync::Cosdna::Database do
       ingredient_attributes[:name] = Ingredient.first.name
 
       @cosdna.insertIngredient(ingredient_attributes, Product.first)
+    end
+  end
+end
+
+describe Sync::Cosdna::File do
+
+  before(:all) do
+    @files_to_sync = Dir.entries("/Users/WEF6/desktop/skincare-app/spec/sync_test/cosdna").select{|file| file[/^cosmetic/]}
+    @file = Sync::Cosdna::File.new("/Users/WEF6/desktop/skincare-app/spec/sync_test/cosdna/" + @files_to_sync[0])
+  end
+
+  context "File" do
+    it 'sets ingredient list' do
+      expect(@file.ingredient_list.length).to eq(7)
+    end
+
+    it 'sets name' do
+      expect(@file.name).to eq("SHUHADA AMAZING EMOLLIENT CREAM 30g")
+    end
+
+    it 'sets image location' do
+      expect(@file.image_location).to eq("../images/cos/5aaf145400.jpg")
     end
   end
 end
