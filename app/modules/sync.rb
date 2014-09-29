@@ -28,8 +28,8 @@ module Sync
         if ingredient_check.nil?
           new_ingredient = Ingredient.create(
             name: format_name(ingredient[:name]),
-            acne: ingredient[:acne].join(", "),
-            irritant: ingredient[:irritant].join(", "),
+            acne: ingredient[:acne],
+            irritant: ingredient[:irritant],
             safety: ingredient[:safety],
             uva: ingredient[:uv][:uva],
             uvb: ingredient[:uv][:uvb],

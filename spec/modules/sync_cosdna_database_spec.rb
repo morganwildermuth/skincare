@@ -36,6 +36,12 @@ describe Sync::Cosdna::Database do
       expect(Product.all.length).to eq(2)
     end
 
+    it 'inserts product with correct fields' do
+      product = @cosdna.insertProduct(@file_1)
+      expect(product.name).to eq("Shuhada Amazing Emollient Cream 30g")
+      expect(product.image_cosdna).to eq(("../images/cos/5aaf145400.jpg"))
+    end
+
     it 'when products is in database does not insert it' do
       @file_1.name = Product.first.name
       @cosdna.insertProduct(@file_1)
@@ -54,12 +60,6 @@ describe Sync::Cosdna::Database do
       ingredient_attributes[:name] = Ingredient.first.name
 
       @cosdna.insertIngredient(ingredient_attributes, Product.first)
-    end
-
-    it "inserts ingredients with uv fields" do
-    end
-
-    it "inserts ingredients with ranges rather than integers for acne || irritation" do
     end
   end
 end
