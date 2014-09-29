@@ -6,6 +6,6 @@
     task :cosdna, :folder_path do |task, arguments|
       folder_path = arguments[:folder_path]
       files_to_sync = Dir.entries(folder_path).select{|file| file[/^cosmetic/]}
-      @cosdna = Sync::Cosdna::Database.new(folder_path, files_to_sync)
+      Sync::Cosdna::Database.new(folder_path, files_to_sync).syncFiles
     end
   end
