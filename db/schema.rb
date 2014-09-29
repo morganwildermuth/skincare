@@ -11,19 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140922044520) do
+ActiveRecord::Schema.define(version: 20140929022658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "ingredients", force: true do |t|
     t.string   "name"
-    t.integer  "acne"
-    t.integer  "irritant"
+    t.string   "acne"
+    t.string   "irritant"
     t.integer  "safety"
     t.string   "uva"
     t.string   "uvb"
     t.string   "functions"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "product_ingredients", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "ingredient_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140922044520) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_cosdna"
   end
 
 end
