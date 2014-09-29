@@ -15,7 +15,7 @@ module Sync
           product_number += 1
           syncWithDatabase(File.new(@folder_path + file_name))
           p "#{product_number} product(s) added to database"
-          ::File.delete(@folder_path) if ENV['RACK_ENV'] == 'production'
+          # ::File.delete(@folder_path) if ENV['RACK_ENV'] == 'production'
         end
       end
 
