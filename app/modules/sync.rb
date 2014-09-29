@@ -10,6 +10,7 @@ module Sync
       end
 
       def syncFiles
+        p "Files to sync being parsed from html files..."
         @files_to_sync.each do |file_name|
           @files << File.new(@folder_path + file_name)
         end
@@ -42,11 +43,17 @@ module Sync
       end
 
       def syncWithDatabase
+        product_number = 0
+        ingredient_number = 0
         @files.each do |file|
           new_product = insertProduct(file)
+          p "New product #{product_number} created"
+          product_number += 1
           if !(new_product.nil?)
             file.ingredient_list.each do |ingredient|
               insertIngredient(ingredient, new_product)
+              p "New ingredient #{ingredient_number} created"
+              ingredient_number += 1
             end
           end
         end
@@ -72,19 +79,23 @@ module Sync
       end
 
       def parseCosDNAProduct
+        p "Beginning to parse product html page..."
         parseName
         parseImageLocation
         parseIngredients
+        p "Finished parsing product html page"
       end
 
       def parseName
         @name = @page.css('.ProdTitleName').children.text
+        p "Product name parsed"
       end
 
       def parseImageLocation
         image_array = @page.css('#Ing_ProdImg').children
         image_location = image_array[0].attributes["src"].value if image_array.length > 0
         @image_location = image_location unless (image_location.nil? || image_location.empty?)
+        p "Product image location parsed"
       end
 
       def createRowIndicators(table_rows)
@@ -161,13 +172,19 @@ module Sync
       def parseIngredients
         table_rows = @page.css(".iStuffTable tr")
         row_indicators = createRowIndicators(table_rows)
+        p "Beginning to parse individual ingredients"
         table_rows.each_with_index do |row, i|
           if i != 0 && ingredientDetailsExist?(row)
             product_rows = getBasicProductRows(row, row_indicators, "Ingredient", "Acne", "Irritant")
+            p "Ingredient basic product rows parsed"
             functions = getFunctions(row, row_indicators["Function"])
+            p "Ingredient functions parsed"
             safety = getSafety(row, row_indicators["Safety"])
+            p "Ingredient safety parsed"
             uv = getUV(row, row_indicators["UV"])
+            p "Ingredient uc parsed"
             @ingredient_list << {name: product_rows["Ingredient"], functions: functions, acne: product_rows["Acne"], irritant: product_rows["Irritant"], safety: safety, uv: uv}
+            p "Ingredient added to ingredient list parsed"
           end
         end
       end
