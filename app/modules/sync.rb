@@ -10,7 +10,7 @@ module Sync
       end
 
       def syncFiles
-        @files_to_sync.slice(0..10).each do |file_name|
+        @files_to_sync.each do |file_name|
           @files << File.new(@folder_path + file_name)
         end
         syncWithDatabase
