@@ -31,6 +31,9 @@ gem 'mechanize'
 gem 'angularjs-rails'
 gem 'angular-rails-templates'
 
+#api
+gem 'rails-api'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem "faker"
