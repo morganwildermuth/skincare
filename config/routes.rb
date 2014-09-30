@@ -1,5 +1,10 @@
 SkincareApp::Application.routes.draw do
 
+  namespace :api, :defaults => {:format => :json} do
+    namespace :v1 do
+      resources :products, only: [:index]
+    end
+  end
   root 'search#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
