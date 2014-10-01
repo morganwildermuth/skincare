@@ -1,4 +1,4 @@
-require 'rails_helper'
+require '../../../rails_helper'
 
 describe "API:V1::Product" do
 
@@ -82,20 +82,20 @@ describe "API:V1::Product" do
   end
 
   it 'returns several products not in database' do
-    get "/api/v1/products?cleanser=" + @product_not_in_database_two.split(" ").join("+") + "&toner=" @product_not_in_database
+    get "/api/v1/products?cleanser=" + @product_not_in_database_two.split(" ").join("+") + "&toner=" + @product_not_in_database
     @response = JSON.parse(response.body)
     expect(@response["data"]["suggestions"].length).to eq(2)
   end
 
   it 'returns mix of products, both in (with correct type) and not in database' do
-    get "/api/v1/products?cleanser=" + @product_not_in_database_two.split(" ").join("+") + "&cleanser=" @product_two.name
+    get "/api/v1/products?cleanser=" + @product_not_in_database_two.split(" ").join("+") + "&cleanser=" + @product_two.name
     @response = JSON.parse(response.body)
     expect(@response["data"]["products"].length).to eq(1)
     expect(@response["data"]["suggestions"].length).to eq(1)
   end
 
   it 'returns mix of products, both in and not in database and of correct and incorrect types' do
-    get "/api/v1/products?cleanser=" + @product.name.split(" ").join("+") + "&toner=" + @product_two.name + "&cleanser=" + @product_not_in_database_two.split(" ").join("+") + "&toner=" @product_not_in_database
+    get "/api/v1/products?cleanser=" + @product.name.split(" ").join("+") + "&toner=" + @product_two.name + "&cleanser=" + @product_not_in_database_two.split(" ").join("+") + "&toner=" + @product_not_in_database
     @response = JSON.parse(response.body)
     expect(@response["data"]["products"].length).to eq(1)
     expect(@response["data"]["suggestions"].length).to eq(3)
