@@ -15,59 +15,60 @@ describe "API V1 Product", :type => :request do
   end
 
   it 'returns indidual product in database with one word name and correct type' do
-    get "/api/v1/products?cleanser=" + @product.name.split(" ").join("+")
+    get "/api/v1/products?cleanser=" + @product_two.name
     @response = JSON.parse(response.body)
-    p @response
     expect(@response["data"]["products"].length).to eq(1)
   end
 
-  # it 'returns indidual product in database with two word name and correct type' do
-  #   get "/api/v1/products?cleanser=" + @product_two.name
-  #   @response = JSON.parse(response.body)
-  #   expect(@response["data"]["products"].length).to eq(1)
-  # end
+  it 'returns indidual product in database with two word name and correct type' do
+    get "/api/v1/products?cleanser=" + @product.name.split(" ").join("+")
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["products"].length).to eq(1)
+  end
 
-  # it 'does not return indidual product in database with one word name and incorrect type' do
-  #   get "/api/v1/products?toner=" + @product.name.split(" ").join("+")
-  #   @response = JSON.parse(response.body)
-  #   expect(@response["data"]["suggestions"].length).to eq(1)
-  # end
+  it 'does not return indidual product in database with one word name and incorrect type' do
+    get "/api/v1/products?toner=" + @product.name.split(" ").join("+")
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["suggestions"].length).to eq(1)
+    expect(@response["data"]["suggestions"][0]["record"]["name"]).to eq(@product.name)
+  end
 
-  # it 'does not return indidual product in database with two word name and incorrect type' do
-  #   get "/api/v1/products?toner=" + @product_two.name
-  #   @response = JSON.parse(response.body)
-  #   expect(@response["data"]["suggestions"].length).to eq(1)
-  # end
+  it 'does not return indidual product in database with two word name and incorrect type' do
+    get "/api/v1/products?toner=" + @product_two.name
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["suggestions"].length).to eq(1)
+    expect(@response["data"]["suggestions"][0]["record"]["name"]).to eq(@product_two.name)
+  end
 
-  # it 'specifies correct issues when issue is incorrect type of product in database' do
-  #   get "/api/v1/products?toner=" + @product.name.split(" ").join("+")
-  #   @response = JSON.parse(response.body)
-  #   expect(@response["data"]["suggestions"][0]["issue"]).to eq("type")
-  # end
+  it 'specifies correct issues when issue is incorrect type of product in database' do
+    get "/api/v1/products?toner=" + @product.name.split(" ").join("+")
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["suggestions"][0]["issue"]).to eq("type")
+  end
 
-  # it 'returns indidual product not in database with one word name' do
-  #   get "/api/v1/products?cleanser=" + @product_not_in_database
-  #   @response = JSON.parse(response.body)
-  #   expect(@response["data"]["suggestions"].length).to eq(3)
-  # end
+  it 'returns individual product not in database with one word name' do
+    get "/api/v1/products?cleanser=" + @product_not_in_database
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["suggestions"].length).to eq(1)
+  end
 
-  # it 'returns indidual product not in database with two word name' do
-  #   get "/api/v1/products?cleanser=" + @product_not_in_database_two.split(" ").join("+")
-  #   @response = JSON.parse(response.body)
-  #   expect(@response["data"]["suggestions"].length).to eq(1)
-  # end
+  it 'returns indidual product not in database with two word name' do
+    get "/api/v1/products?cleanser=" + @product_not_in_database_two.split(" ").join("+")
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["suggestions"].length).to eq(1)
+  end
 
-  # it 'specifies correct issues when issue is product was not in database' do
-  #   get "/api/v1/products?toner=" + @product.name.split(" ").join("+")
-  #   @response = JSON.parse(response.body)
-  #   expect(@response["data"]["suggestions"][0]["issue"]).to eq("db")
-  # end
+  it 'specifies correct issues when issue is product was not in database' do
+    get "/api/v1/products?toner=" + @product_not_in_database
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["suggestions"][0]["issue"]).to eq("db")
+  end
 
-  # it 'returns correct error when product is neither in database or in the search outside the database' do
-  #   get "/api/v1/products?cleanser=" + @product_not_in_search
-  #   @response = JSON.parse(response.body)
-  #   expect(@response["errors"].length).to eq(1)
-  # end
+  it 'returns correct error when product is neither in database or in the search outside the database' do
+    get "/api/v1/products?cleanser=" + @product_not_in_search
+    @response = JSON.parse(response.body)
+    expect(@response["errors"].length).to eq(1)
+  end
 
   # it 'returns several products in database with correct types' do
   #   get "/api/v1/products?cleanser=" + @product.name.split(" ").join("+") + "&cleanser=" + @product_two.name
