@@ -1,4 +1,4 @@
-class API::V1::ProductController < API::BaseController
+class Api::V1::ProductsController < API::V1::BaseController
   respond_to :json
 
   def index

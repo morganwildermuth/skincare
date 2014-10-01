@@ -1,4 +1,4 @@
-class API::BaseController < ActionController::API
+class API::V1::BaseController < ActionController::API
   require "net/http"
   include ActionController::MimeResponds
   include ActionController::StrongParameters
