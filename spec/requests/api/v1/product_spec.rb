@@ -17,6 +17,7 @@ describe "API:V1::Product" do
   it 'returns indidual product in database with one word name and correct type' do
     get "/api/v1/products?cleanser=" + @product.name.split(" ").join("+")
     @response = JSON.parse(response.body)
+    p @response
     expect(@response["data"]["products"].length).to eq(1)
   end
 
