@@ -78,11 +78,11 @@ describe "API V1 Product", :type => :request do
     expect(Product.find_by(name: @product_not_in_database_two).class).to eq(Product)
   end
 
-  it 'returns correct error when product is neither in database or in the search outside the database' do
-    get "/api/v1/products?cleanser=" + @product_not_in_search
-    @response = JSON.parse(response.body)
-    expect(@response["errors"].length).to eq(1)
-  end
+  # it 'returns correct error when product is neither in database or in the search outside the database' do
+  #   get "/api/v1/products?cleanser=" + @product_not_in_search
+  #   @response = JSON.parse(response.body)
+  #   expect(@response["errors"].length).to eq(1)
+  # end
 
   # it 'returns several products in database with correct types' do
   #   get "/api/v1/products?cleanser=" + @product.name.split(" ").join("+") + "&cleanser=" + @product_two.name
