@@ -1,9 +1,11 @@
+require 'open-uri'
 module Sync
   module Cosdna
+
     class Database
       attr_reader :files if ENV['RACK_ENV'] == 'test'
 
-      def initialize(folder_path, files_to_sync)
+      def initialize(folder_path = nil, files_to_sync = nil)
         @folder_path = folder_path
         @files_to_sync = files_to_sync
         @files = []
@@ -91,14 +93,6 @@ module Sync
       end
 
       def createRowIndicators(table_rows)
-        # p 1
-        # p "#{table_rows}" if @file_path == "app/cosdna_html/cosmetic_d7a0140117.html"
-        # p 2
-        # p "#{table_rows[0]}" if @file_path == "app/cosdna_html/cosmetic_d7a0140117.html"
-        # p 3
-        # p "#{table_rows[0].children}" if @file_path == "app/cosdna_html/cosmetic_d7a0140117.html"
-        # p 4
-        # p "#{table_rows[0].children.children}" if @file_path == "app/cosdna_html/cosmetic_d7a0140117.html"
         row_indicators = {}
         table_rows[0].children.children.each_with_index do |row, i|
           row_indicators[row.text.strip] = (i * 2)

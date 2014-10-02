@@ -5,7 +5,7 @@ describe "API V1 Product", :type => :request do
   before(:all) do
     @product_not_in_search = "Frankenstein"
     @product_not_in_database = "Cerave"
-    @product_not_in_database_two = "Cerave Foaming Cleanser"
+    @product_not_in_database_two = "Cerave+Foaming+Cleanser"
   end
 
   before(:each) do
@@ -52,16 +52,30 @@ describe "API V1 Product", :type => :request do
     expect(@response["data"]["suggestions"].length).to eq(1)
   end
 
-  it 'returns indidual product not in database with two word name' do
-    get "/api/v1/products?cleanser=" + @product_not_in_database_two.split(" ").join("+")
+  it "returns product not in database and without exact match in CosDNA with suggestion that included potential name" do
+    get "/api/v1/products?cleanser=" + @product_not_in_database
     @response = JSON.parse(response.body)
-    expect(@response["data"]["suggestions"].length).to eq(1)
+    expect(@response["data"]["suggestions"][0]["potential_intended_search_name"].downcase).to eq(Product.last.name.downcase)
+  end
+
+  it 'returns indidual product not in database with two word name' do
+    get "/api/v1/products?cleanser=" + @product_not_in_database_two
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["products"].length).to eq(1)
   end
 
   it 'specifies correct issues when issue is product was not in database' do
     get "/api/v1/products?toner=" + @product_not_in_database
     @response = JSON.parse(response.body)
     expect(@response["data"]["suggestions"][0]["issue"]).to eq("db")
+  end
+
+  it 'adds product when not in database, but in cosDNA with first three links from cosDNA having same name' do
+    get "/api/v1/products?cleanser=" + @product_not_in_database_two
+    @response = JSON.parse(response.body)
+    expect(@response["data"]["products"].length).to eq(1)
+    @product_not_in_database_two.gsub!("+", " ")
+    expect(Product.find_by(name: @product_not_in_database_two).class).to eq(Product)
   end
 
   it 'returns correct error when product is neither in database or in the search outside the database' do
